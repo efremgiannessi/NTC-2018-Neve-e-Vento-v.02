@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Snowflake, Wind, Layers, Calculator, Printer, AlertTriangle, FileText, Info } from 'lucide-react';
 import { CalculationType, SnowZone, WindZone, RoughnessClass, SnowState, WindState, DriftState, CalculationResult } from './types';
 import { calculateSnow, calculateWind, calculateDrift } from './utils/calculations';
