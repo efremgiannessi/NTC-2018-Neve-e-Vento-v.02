@@ -64,21 +64,24 @@ const App: React.FC = () => {
   };
 
   // --- Render Helpers ---
+  const inputClass = "w-full bg-gray-900/50 border border-white/10 text-white text-sm rounded-lg block p-2.5 focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all placeholder-gray-500 backdrop-blur-sm";
+  const labelClass = "block text-sm font-medium text-gray-300 mb-1.5 ml-1";
+  
   const renderInputSection = () => {
     if (activeTab === CalculationType.SNOW) {
       return (
-        <div className="space-y-5 animate-fade-in">
-          <div className="border-l-4 border-blue-500 pl-4">
-            <h2 className="text-lg font-bold text-white">Parametri Neve</h2>
+        <div className="space-y-6 animate-fade-in">
+          <div className="border-l-4 border-blue-500 pl-4 py-1">
+            <h2 className="text-xl font-bold text-white drop-shadow-md">Parametri Neve</h2>
             <p className="text-xs text-gray-400">Rif. NTC 2018 §3.4</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Zona Climatica</label>
+            <label className={labelClass}>Zona Climatica</label>
             <select 
               value={snowState.zone} 
               onChange={(e) => setSnowState({...snowState, zone: e.target.value as SnowZone})}
-              className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block p-2.5 focus:ring-blue-500 focus:border-blue-500"
+              className={inputClass}
             >
               <option value={SnowZone.I_ALP}>Zona I - Alpina</option>
               <option value={SnowZone.I_MED}>Zona I - Mediterranea</option>
@@ -88,48 +91,48 @@ const App: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Altitudine (m s.l.m.)</label>
-            <div className="flex items-center gap-3">
+            <label className={labelClass}>Altitudine (m s.l.m.)</label>
+            <div className="flex items-center gap-4">
               <input 
                 type="range" min="0" max="1500" 
                 value={snowState.altitude} 
                 onChange={(e) => setSnowState({...snowState, altitude: parseInt(e.target.value)})}
-                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-colors"
               />
               <input 
                 type="number" 
                 value={snowState.altitude}
                 onChange={(e) => setSnowState({...snowState, altitude: parseInt(e.target.value)})}
-                className="w-20 bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block p-2"
+                className={`${inputClass} w-24 text-center font-mono`}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Inclinazione (°)</label>
-            <div className="flex items-center gap-3">
+            <label className={labelClass}>Inclinazione (°)</label>
+            <div className="flex items-center gap-4">
               <input 
                 type="range" min="0" max="80" 
                 value={snowState.angle} 
                 onChange={(e) => setSnowState({...snowState, angle: parseInt(e.target.value)})}
-                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-colors"
               />
               <input 
                 type="number" 
                 value={snowState.angle}
                 onChange={(e) => setSnowState({...snowState, angle: parseInt(e.target.value)})}
-                className="w-20 bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block p-2"
+                className={`${inputClass} w-24 text-center font-mono`}
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
              <div>
-               <label className="block text-sm font-medium text-gray-300 mb-1">Coeff. Ce</label>
+               <label className={labelClass}>Coeff. Ce</label>
                <select 
                  value={snowState.ce}
                  onChange={(e) => setSnowState({...snowState, ce: parseFloat(e.target.value)})}
-                 className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+                 className={inputClass}
                >
                  <option value={1.0}>1.0</option>
                  <option value={0.8}>0.8</option>
@@ -137,12 +140,12 @@ const App: React.FC = () => {
                </select>
              </div>
              <div>
-               <label className="block text-sm font-medium text-gray-300 mb-1">Coeff. Ct</label>
+               <label className={labelClass}>Coeff. Ct</label>
                <input 
                  type="number" step="0.1"
                  value={snowState.ct}
                  onChange={(e) => setSnowState({...snowState, ct: parseFloat(e.target.value)})}
-                 className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+                 className={inputClass}
                />
              </div>
           </div>
@@ -150,29 +153,29 @@ const App: React.FC = () => {
       );
     } else if (activeTab === CalculationType.WIND) {
       return (
-        <div className="space-y-5 animate-fade-in">
-          <div className="border-l-4 border-teal-500 pl-4">
-            <h2 className="text-lg font-bold text-white">Parametri Vento</h2>
+        <div className="space-y-6 animate-fade-in">
+          <div className="border-l-4 border-teal-500 pl-4 py-1">
+            <h2 className="text-xl font-bold text-white drop-shadow-md">Parametri Vento</h2>
             <p className="text-xs text-gray-400">Rif. NTC 2018 §3.3</p>
           </div>
           
            <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Zona Vento</label>
+            <label className={labelClass}>Zona Vento</label>
             <select 
               value={windState.zone} 
               onChange={(e) => setWindState({...windState, zone: e.target.value as WindZone})}
-              className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg block p-2.5"
+              className={inputClass}
             >
               {[1,2,3,4,5,6,7,8,9].map(z => <option key={z} value={String(z)}>Zona {z}</option>)}
             </select>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Classe Rugosità</label>
+            <label className={labelClass}>Classe Rugosità</label>
             <select 
               value={windState.roughness}
               onChange={(e) => setWindState({...windState, roughness: e.target.value as RoughnessClass})}
-              className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+              className={inputClass}
             >
               <option value={RoughnessClass.A}>A - Urbana densa</option>
               <option value={RoughnessClass.B}>B - Urbana/Sub</option>
@@ -182,40 +185,40 @@ const App: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Altezza Edificio (m)</label>
-            <div className="flex items-center gap-3">
+            <label className={labelClass}>Altezza Edificio (m)</label>
+            <div className="flex items-center gap-4">
               <input 
                 type="range" min="1" max="100" 
                 value={windState.height} 
                 onChange={(e) => setWindState({...windState, height: parseInt(e.target.value)})}
-                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400 transition-colors"
               />
               <input 
                 type="number" 
                 value={windState.height}
                 onChange={(e) => setWindState({...windState, height: parseInt(e.target.value)})}
-                className="w-20 bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2"
+                className={`${inputClass} w-24 text-center font-mono`}
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
              <div>
-               <label className="block text-sm font-medium text-gray-300 mb-1">Dist. Costa (km)</label>
+               <label className={labelClass}>Dist. Costa (km)</label>
                <input 
                  type="number" 
                  value={windState.distanceCoast}
                  onChange={(e) => setWindState({...windState, distanceCoast: parseFloat(e.target.value)})}
-                 className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+                 className={inputClass}
                />
              </div>
              <div>
-               <label className="block text-sm font-medium text-gray-300 mb-1">Coeff. Cp</label>
+               <label className={labelClass}>Coeff. Cp</label>
                <input 
                  type="number" step="0.1"
                  value={windState.cp}
                  onChange={(e) => setWindState({...windState, cp: parseFloat(e.target.value)})}
-                 className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+                 className={inputClass}
                />
              </div>
           </div>
@@ -223,25 +226,25 @@ const App: React.FC = () => {
       );
     } else {
       return (
-        <div className="space-y-5 animate-fade-in">
-          <div className="border-l-4 border-purple-500 pl-4">
-            <h2 className="text-lg font-bold text-white">Accumulo Neve</h2>
+        <div className="space-y-6 animate-fade-in">
+          <div className="border-l-4 border-purple-500 pl-4 py-1">
+            <h2 className="text-xl font-bold text-white drop-shadow-md">Accumulo Neve</h2>
             <p className="text-xs text-gray-400">Salto di quota (NTC §3.4.4)</p>
           </div>
 
-          <div className="bg-blue-900/20 p-3 rounded-lg border border-blue-800 flex gap-2 items-start">
-             <Info className="w-5 h-5 text-blue-400 mt-0.5" />
-             <p className="text-xs text-blue-200">
+          <div className="bg-blue-500/10 backdrop-blur-sm p-4 rounded-xl border border-blue-500/20 flex gap-3 items-start">
+             <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
+             <p className="text-sm text-blue-200 leading-snug">
                Il calcolo dell'accumulo dipende dai parametri Neve (zona/altitudine). Assicurati di aver impostato correttamente la scheda "Neve".
              </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Tipologia</label>
+            <label className={labelClass}>Tipologia</label>
             <select 
               value={driftState.preset}
               onChange={handleDriftPreset}
-              className="w-full bg-gray-700 border border-gray-500 text-white text-sm rounded-lg p-2.5"
+              className={inputClass}
             >
               <option value="custom">Personalizzato</option>
               <option value="shed">Shed Industriale</option>
@@ -252,40 +255,40 @@ const App: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">Dislivello h (m)</label>
-            <div className="flex items-center gap-3">
+            <label className={labelClass}>Dislivello h (m)</label>
+            <div className="flex items-center gap-4">
               <input 
                 type="range" min="0.5" max="10" step="0.1"
                 value={driftState.heightH} 
                 onChange={(e) => setDriftState({...driftState, heightH: parseFloat(e.target.value), preset: 'custom'})}
-                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500 hover:accent-purple-400 transition-colors"
               />
               <input 
                 type="number" step="0.1"
                 value={driftState.heightH}
                 onChange={(e) => setDriftState({...driftState, heightH: parseFloat(e.target.value), preset: 'custom'})}
-                className="w-20 bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2"
+                className={`${inputClass} w-24 text-center font-mono`}
               />
             </div>
           </div>
 
           <div>
-             <label className="block text-sm font-medium text-gray-300 mb-1">Lunghezza copertura b1 (m)</label>
+             <label className={labelClass}>Lunghezza copertura b1 (m)</label>
              <input 
                type="number" 
                value={driftState.lengthB1}
                onChange={(e) => setDriftState({...driftState, lengthB1: parseFloat(e.target.value), preset: 'custom'})}
-               className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+               className={inputClass}
              />
           </div>
 
            <div>
-             <label className="block text-sm font-medium text-gray-300 mb-1">Peso spec. Neve γ (kN/m³)</label>
+             <label className={labelClass}>Peso spec. Neve γ (kN/m³)</label>
              <input 
                type="number" step="0.1"
                value={driftState.gamma}
                onChange={(e) => setDriftState({...driftState, gamma: parseFloat(e.target.value)})}
-               className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded-lg p-2.5"
+               className={inputClass}
              />
           </div>
         </div>
@@ -296,16 +299,21 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       
+      {/* Top Banner - Versione Web */}
+      <div className="w-full bg-indigo-600/80 backdrop-blur-sm text-white text-center text-xs font-bold uppercase tracking-widest py-1 border-b border-indigo-500/50 shadow-lg no-print">
+        Versione Web
+      </div>
+
       {/* Header */}
-      <header className="bg-gray-800 shadow-md border-b border-gray-700 z-10 sticky top-0 no-print">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-600 text-white p-2 rounded-lg shadow-lg shadow-blue-900/50">
-              <Calculator size={20} />
+      <header className="bg-gray-900/60 backdrop-blur-xl border-b border-white/10 z-20 sticky top-0 no-print transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-2.5 rounded-xl shadow-lg shadow-blue-900/50 border border-white/10">
+              <Calculator size={24} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white leading-none">NTC 2018 Calculator</h1>
-              <span className="text-xs text-gray-400 font-medium tracking-wider">NEVE | VENTO | ACCUMULO</span>
+              <h1 className="text-2xl font-bold text-white leading-none tracking-tight drop-shadow-sm">NTC 2018 Calculator</h1>
+              <span className="text-xs text-gray-400 font-medium tracking-[0.2em] uppercase">Neve | Vento | Accumulo</span>
             </div>
           </div>
         </div>
@@ -320,54 +328,55 @@ const App: React.FC = () => {
          </p>
       </div>
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-0">
         
         {/* Sidebar Controls */}
         <aside className="lg:col-span-4 space-y-6 no-print">
           {/* Tabs */}
-          <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-1 flex">
+          <div className="bg-gray-800/40 backdrop-blur-md border border-white/10 rounded-2xl p-1.5 flex shadow-2xl">
             <button 
               onClick={() => setActiveTab(CalculationType.SNOW)}
-              className={`flex-1 py-2 text-sm text-center transition rounded-lg flex items-center justify-center gap-2 ${activeTab === CalculationType.SNOW ? 'bg-gray-600 text-white shadow' : 'text-gray-400 hover:text-white hover:bg-gray-700'}`}
+              className={`flex-1 py-2.5 text-sm font-medium text-center transition-all duration-300 rounded-xl flex items-center justify-center gap-2 ${activeTab === CalculationType.SNOW ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40 ring-1 ring-white/20' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
             >
               <Snowflake size={16} /> Neve
             </button>
             <button 
               onClick={() => setActiveTab(CalculationType.WIND)}
-              className={`flex-1 py-2 text-sm text-center transition rounded-lg flex items-center justify-center gap-2 ${activeTab === CalculationType.WIND ? 'bg-gray-600 text-white shadow' : 'text-gray-400 hover:text-white hover:bg-gray-700'}`}
+              className={`flex-1 py-2.5 text-sm font-medium text-center transition-all duration-300 rounded-xl flex items-center justify-center gap-2 ${activeTab === CalculationType.WIND ? 'bg-teal-600 text-white shadow-lg shadow-teal-900/40 ring-1 ring-white/20' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
             >
               <Wind size={16} /> Vento
             </button>
             <button 
               onClick={() => setActiveTab(CalculationType.DRIFT)}
-              className={`flex-1 py-2 text-sm text-center transition rounded-lg flex items-center justify-center gap-2 ${activeTab === CalculationType.DRIFT ? 'bg-gray-600 text-white shadow' : 'text-gray-400 hover:text-white hover:bg-gray-700'}`}
+              className={`flex-1 py-2.5 text-sm font-medium text-center transition-all duration-300 rounded-xl flex items-center justify-center gap-2 ${activeTab === CalculationType.DRIFT ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/40 ring-1 ring-white/20' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
             >
               <Layers size={16} /> Accumulo
             </button>
           </div>
 
-          {/* Input Panel */}
-          <div className="bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-6 card">
+          {/* Input Panel - Glassmorphism */}
+          <div className="backdrop-blur-md bg-gray-800/40 border border-white/10 rounded-2xl shadow-2xl p-6">
             {renderInputSection()}
 
-            <div className="flex gap-2 pt-6">
+            <div className="flex gap-2 pt-8">
               <button 
                 onClick={handlePrint}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition text-sm flex items-center justify-center gap-2"
+                className="flex-1 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-blue-900/30 border border-white/10 flex items-center justify-center gap-2 group"
               >
-                <Printer size={16} /> Stampa Report / PDF
+                <Printer size={18} className="group-hover:scale-110 transition-transform" /> 
+                Stampa Report / PDF
               </button>
             </div>
           </div>
 
            {/* Disclaimer */}
-           <div className="bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded-r-lg">
+           <div className="backdrop-blur-sm bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-r-xl border-y border-r border-yellow-500/10">
             <div className="flex">
               <div className="flex-shrink-0">
                 <AlertTriangle className="text-yellow-500 w-5 h-5" />
               </div>
               <div className="ml-3">
-                <p className="text-xs text-yellow-200">
+                <p className="text-xs text-yellow-100/90 leading-relaxed">
                   Strumento indicativo per pre-dimensionamento. I valori devono essere validati da un ingegnere abilitato.
                 </p>
               </div>
@@ -376,7 +385,7 @@ const App: React.FC = () => {
         </aside>
 
         {/* Results Section */}
-        <section className="lg:col-span-8 space-y-6">
+        <section className="lg:col-span-8 space-y-8">
           
           {/* Main Results Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -391,34 +400,34 @@ const App: React.FC = () => {
               label={result.secResult1.label}
               value={result.secResult1.value}
               unit={result.secResult1.unit}
-              colorClass="text-gray-200"
+              colorClass="text-gray-100"
             />
             <ResultCard 
               label={result.secResult2.label}
               value={result.secResult2.value}
               unit={result.secResult2.unit}
-              colorClass="text-gray-200"
+              colorClass="text-gray-100"
             />
           </div>
 
           {/* Stats for Drift (Conditional) */}
           {activeTab === CalculationType.DRIFT && result.stats && (
-            <div className="bg-gray-800 rounded-xl shadow-lg p-4 border border-purple-500/30 animate-fade-in card break-inside-avoid">
-               <h4 className="text-sm font-bold text-purple-300 uppercase mb-3 flex items-center gap-2">
-                 <FileText size={14} /> Statistiche Accumulo
+            <div className="backdrop-blur-md bg-gray-800/40 border border-purple-500/30 rounded-2xl shadow-2xl p-5 animate-fade-in break-inside-avoid">
+               <h4 className="text-sm font-bold text-purple-300 uppercase mb-4 flex items-center gap-2 tracking-wider">
+                 <FileText size={16} /> Statistiche Accumulo
                </h4>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                 <div className="bg-gray-900/50 p-3 rounded border border-gray-700">
-                   <p className="text-xs text-gray-400">Lunghezza (ls)</p>
-                   <p className="text-lg font-semibold text-white">{result.stats.ls} m</p>
+                 <div className="bg-gray-900/40 p-4 rounded-xl border border-white/5">
+                   <p className="text-xs text-gray-400 uppercase tracking-wide">Lunghezza (ls)</p>
+                   <p className="text-xl font-bold text-white mt-1">{result.stats.ls} m</p>
                  </div>
-                 <div className="bg-gray-900/50 p-3 rounded border border-gray-700">
-                   <p className="text-xs text-gray-400">Peso Cuneo</p>
-                   <p className="text-lg font-semibold text-white">{result.stats.weight} kg/m</p>
+                 <div className="bg-gray-900/40 p-4 rounded-xl border border-white/5">
+                   <p className="text-xs text-gray-400 uppercase tracking-wide">Peso Cuneo</p>
+                   <p className="text-xl font-bold text-white mt-1">{result.stats.weight} kg/m</p>
                  </div>
-                 <div className="bg-gray-900/50 p-3 rounded border border-gray-700">
-                   <p className="text-xs text-gray-400">Volume Neve</p>
-                   <p className="text-lg font-semibold text-white">{result.stats.volume} m³/m</p>
+                 <div className="bg-gray-900/40 p-4 rounded-xl border border-white/5">
+                   <p className="text-xs text-gray-400 uppercase tracking-wide">Volume Neve</p>
+                   <p className="text-xl font-bold text-white mt-1">{result.stats.volume} m³/m</p>
                  </div>
                </div>
             </div>
@@ -444,19 +453,19 @@ const App: React.FC = () => {
           </div>
 
           {/* Detailed Table */}
-          <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700 card break-inside-avoid">
-            <div className="px-6 py-4 border-b border-gray-700 bg-gray-700/50 flex justify-between items-center">
-              <h3 className="text-sm font-bold text-gray-200 uppercase">Dettagli di Calcolo</h3>
-              <span className="text-xs font-mono bg-gray-900 px-2 py-1 rounded text-gray-400 border border-gray-600">NTC 2018</span>
+          <div className="backdrop-blur-md bg-gray-800/40 border border-white/10 rounded-2xl shadow-2xl overflow-hidden break-inside-avoid">
+            <div className="px-6 py-4 border-b border-white/10 bg-white/5 flex justify-between items-center">
+              <h3 className="text-sm font-bold text-gray-200 uppercase tracking-wider">Dettagli di Calcolo</h3>
+              <span className="text-[10px] font-bold bg-white/10 px-2 py-1 rounded text-gray-300 border border-white/5 tracking-widest">NTC 2018</span>
             </div>
             <div className="p-6">
               <table className="min-w-full text-sm text-left text-gray-300">
                 <tbody>
                   {result.details.map((row, idx) => (
-                    <tr key={idx} className="border-b border-gray-700 last:border-0 hover:bg-gray-700/50 print:border-gray-300">
-                      <td className="py-2 text-gray-400 font-medium print:text-black">{row.label}</td>
-                      <td className={`py-2 text-right ${row.highlight ? 'text-xl font-bold text-white print:text-black' : 'text-gray-200 print:text-black'}`}>
-                        {row.value} {row.unit && <span className="text-gray-500 text-sm ml-1 print:text-gray-700">{row.unit}</span>}
+                    <tr key={idx} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors print:border-gray-300">
+                      <td className="py-3 text-gray-400 font-medium print:text-black pl-2">{row.label}</td>
+                      <td className={`py-3 text-right pr-2 ${row.highlight ? 'text-xl font-bold text-white print:text-black drop-shadow-sm' : 'text-gray-200 print:text-black font-semibold'}`}>
+                        {row.value} {row.unit && <span className="text-gray-500 text-xs ml-1 print:text-gray-700 font-normal">{row.unit}</span>}
                       </td>
                     </tr>
                   ))}
@@ -467,9 +476,14 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      <footer className="bg-gray-800 border-t border-gray-700 py-6 mt-auto no-print">
-        <div className="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} - Strumento Professionale per Ingegneria Civile
+      <footer className="bg-gray-900/80 backdrop-blur-md border-t border-white/10 py-8 mt-auto no-print">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-sm text-gray-500 mb-2">&copy; {new Date().getFullYear()} - Strumento Professionale per Ingegneria Civile</p>
+          <div className="flex justify-center gap-4 text-xs text-gray-600">
+            <span>v2.1.0</span>
+            <span>•</span>
+            <span>Made with React & Tailwind</span>
+          </div>
         </div>
       </footer>
     </div>
