@@ -490,13 +490,17 @@ const App: React.FC = () => {
       </main>
 
       <footer className="bg-gray-900/80 backdrop-blur-md border-t border-white/10 py-8 mt-auto no-print">
-        <div className="max-w-7xl mx-auto px-4 text-center">
+        <div className="max-w-7xl mx-auto px-4 text-center flex flex-col items-center">
           <p className="text-sm text-gray-500 mb-2">&copy; {new Date().getFullYear()} - Strumento Professionale per Ingegneria Civile</p>
-          <div className="flex justify-center gap-4 text-xs text-gray-600">
+          <div className="flex justify-center gap-4 text-xs text-gray-600 mb-4">
             <span>v2.1.0</span>
             <span>•</span>
             <span>Made with React & Tailwind</span>
           </div>
+          
+          <a href="https://app.netlify.com/projects/ntc-2018-neve-vento-v02/deploys" target="_blank" rel="noopener noreferrer" className="opacity-80 hover:opacity-100 transition-opacity">
+            <img src="https://api.netlify.com/api/v1/badges/78d4a1c9-860c-4a41-a5d6-1626fd9f6cd4/deploy-status" alt="Netlify Status" />
+          </a>
         </div>
       </footer>
     </div>
