@@ -307,6 +307,7 @@ const App: React.FC = () => {
       {/* Header */}
       <header className="bg-gray-900/60 backdrop-blur-xl border-b border-white/10 z-20 sticky top-0 no-print transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          {/* Logo Section */}
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-2.5 rounded-xl shadow-lg shadow-blue-900/50 border border-white/10">
               <Calculator size={24} />
@@ -314,6 +315,18 @@ const App: React.FC = () => {
             <div>
               <h1 className="text-2xl font-bold text-white leading-none tracking-tight drop-shadow-sm">NTC 2018 Calculator</h1>
               <span className="text-xs text-gray-400 font-medium tracking-[0.2em] uppercase">Neve | Vento | Accumulo</span>
+            </div>
+          </div>
+
+          {/* System Status Indicator */}
+          <div className="hidden md:flex flex-col items-end">
+            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-0.5">Stato Sistema</span>
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+              </span>
+              <span className="text-sm font-semibold text-gray-200 tracking-tight">Online & Ready</span>
             </div>
           </div>
         </div>
