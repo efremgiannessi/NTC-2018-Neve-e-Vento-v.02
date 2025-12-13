@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ntc-2018-neve-vento-v02.netlify.app/sitemap.xml

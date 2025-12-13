@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Snowflake, Wind, Layers, Calculator, Printer, AlertTriangle, FileText, Info } from 'lucide-react';
 import { CalculationType, SnowZone, WindZone, RoughnessClass, SnowState, WindState, DriftState, CalculationResult } from './types';
 import { calculateSnow, calculateWind, calculateDrift } from './utils/calculations';
@@ -31,6 +31,16 @@ const App: React.FC = () => {
     lengthB1: 10,
     gamma: 2.0
   });
+
+  // --- Dynamic Title Effect (SEO/UX) ---
+  useEffect(() => {
+    const titles = {
+      [CalculationType.SNOW]: 'Carico Neve | NTC 2018',
+      [CalculationType.WIND]: 'Pressione Vento | NTC 2018',
+      [CalculationType.DRIFT]: 'Accumulo Neve | NTC 2018'
+    };
+    document.title = titles[activeTab];
+  }, [activeTab]);
 
   // --- Calculations ---
   const result: CalculationResult = useMemo(() => {
@@ -299,14 +309,24 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       
-      {/* Top Banner - Versione Web */}
-      <div className="w-full bg-indigo-600/80 backdrop-blur-sm text-white text-center text-xs font-bold uppercase tracking-widest py-1 border-b border-indigo-500/50 shadow-lg no-print">
-        Versione Web
+      {/* Developer Credits Banner */}
+      <div className="w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-white/10 py-3 px-4 text-center no-print relative z-50 shadow-md">
+        <p className="text-sm md:text-base text-gray-300 font-medium tracking-wide">
+          Software progettato e sviluppato da{' '}
+          <a 
+            href="https://www.efremgiannessi.org" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-blue-400 hover:text-blue-300 font-bold hover:underline decoration-2 underline-offset-4 transition-all"
+          >
+            Efrem Giannessi
+          </a>
+        </p>
       </div>
 
       {/* Header */}
       <header className="bg-gray-900/60 backdrop-blur-xl border-b border-white/10 z-20 sticky top-0 no-print transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* Logo Section */}
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-2.5 rounded-xl shadow-lg shadow-blue-900/50 border border-white/10">
@@ -341,10 +361,10 @@ const App: React.FC = () => {
          </p>
       </div>
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-0">
+      <main className="flex-grow max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-0">
         
         {/* Sidebar Controls */}
-        <aside className="lg:col-span-4 space-y-6 no-print">
+        <aside className="lg:col-span-3 space-y-6 no-print">
           {/* Tabs */}
           <div className="bg-gray-800/40 backdrop-blur-md border border-white/10 rounded-2xl p-1.5 flex shadow-2xl">
             <button 
@@ -398,7 +418,7 @@ const App: React.FC = () => {
         </aside>
 
         {/* Results Section */}
-        <section className="lg:col-span-8 space-y-8">
+        <section className="lg:col-span-9 space-y-8">
           
           {/* Main Results Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -490,7 +510,7 @@ const App: React.FC = () => {
       </main>
 
       <footer className="bg-gray-900/80 backdrop-blur-md border-t border-white/10 py-8 mt-auto no-print">
-        <div className="max-w-7xl mx-auto px-4 text-center flex flex-col items-center">
+        <div className="max-w-[1600px] mx-auto px-4 text-center flex flex-col items-center">
           <p className="text-sm text-gray-500 mb-2">&copy; {new Date().getFullYear()} - Strumento Professionale per Ingegneria Civile</p>
           <div className="flex justify-center gap-4 text-xs text-gray-600 mb-4">
             <span>v2.1.0</span>

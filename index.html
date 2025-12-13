@@ -3,21 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calcolatore Carichi NTC 2018</title>
-    <!-- Tailwind CSS (via CDN for dev, but processed by Vite in build) -->
+    
+    <!-- Primary Meta Tags -->
+    <title>Calcolo Carichi NTC 2018 | Neve, Vento e Accumulo | Software Ingegneria Civile</title>
+    <meta name="title" content="Calcolo Carichi NTC 2018 | Neve, Vento e Accumulo">
+    <meta name="description" content="Software gratuito per il calcolo dei carichi da neve, pressione del vento e accumulo secondo le Norme Tecniche Costruzioni (NTC 2018). Strumento per ingegneri e architetti.">
+    <meta name="keywords" content="NTC 2018, calcolo neve, pressione vento, accumulo neve, ingegneria civile, calcolo strutturale, zona climatica, zona vento, coefficiente esposizione">
+    <meta name="author" content="Ingegneria Civile Tools">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ntc-2018-neve-vento-v02.netlify.app/">
+    <meta property="og:title" content="Calcolatore NTC 2018 - Neve e Vento">
+    <meta property="og:description" content="Calcola rapidamente i carichi ambientali (Neve, Vento, Accumulo) secondo la normativa italiana NTC 2018. Report pronto per la stampa.">
+    <meta property="og:image" content="https://ntc-2018-neve-vento-v02.netlify.app/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ntc-2018-neve-vento-v02.netlify.app/">
+    <meta property="twitter:title" content="Calcolatore NTC 2018 - Neve e Vento">
+    <meta property="twitter:description" content="Calcola rapidamente i carichi ambientali (Neve, Vento, Accumulo) secondo la normativa italiana NTC 2018.">
+    <meta property="twitter:image" content="https://ntc-2018-neve-vento-v02.netlify.app/og-image.jpg">
+
+    <!-- Tailwind CSS (via CDN for dev/build as not in package.json) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        /* Deep gradient background to highlight Glassmorphism */
         background: radial-gradient(circle at top left, #1f2937, #0f172a);
         background-attachment: fixed;
         color: #f3f4f6;
         margin: 0;
         min-height: 100vh;
       }
-      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -54,16 +74,16 @@
         }
       }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
-    "vite": "https://aistudiocdn.com/vite@^7.2.7",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.2"
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "recharts": "https://esm.sh/recharts@^3.5.1",
+    "vite": "https://esm.sh/vite@^7.2.7",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0"
   }
 }
 </script>
