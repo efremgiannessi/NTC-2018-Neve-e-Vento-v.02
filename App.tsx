@@ -1,36 +1,42 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Snowflake, Wind, Layers, Calculator, Printer, AlertTriangle, FileText, Info } from 'lucide-react';
+import { Snowflake, Wind, Layers, Calculator, Printer, AlertTriangle, FileText, Info, RotateCcw, FileSpreadsheet, Download } from 'lucide-react';
 import { CalculationType, SnowZone, WindZone, RoughnessClass, SnowState, WindState, DriftState, CalculationResult } from './types';
 import { calculateSnow, calculateWind, calculateDrift } from './utils/calculations';
 import ResultCard from './components/ResultCard';
 import ChartContainer from './components/ChartContainer';
 
+// --- Constants for Reset ---
+const INITIAL_SNOW_STATE: SnowState = {
+  zone: SnowZone.I_ALP,
+  altitude: 200,
+  angle: 15,
+  ce: 1.0,
+  ct: 1.0
+};
+
+const INITIAL_WIND_STATE: WindState = {
+  zone: WindZone.Z1,
+  roughness: RoughnessClass.B,
+  height: 10,
+  distanceCoast: 20,
+  cp: 0.8
+};
+
+const INITIAL_DRIFT_STATE: DriftState = {
+  preset: 'custom',
+  heightH: 2.0,
+  lengthB1: 10,
+  gamma: 2.0
+};
+
 const App: React.FC = () => {
   // --- State ---
   const [activeTab, setActiveTab] = useState<CalculationType>(CalculationType.SNOW);
-
-  const [snowState, setSnowState] = useState<SnowState>({
-    zone: SnowZone.I_ALP,
-    altitude: 200,
-    angle: 15,
-    ce: 1.0,
-    ct: 1.0
-  });
-
-  const [windState, setWindState] = useState<WindState>({
-    zone: WindZone.Z1,
-    roughness: RoughnessClass.B,
-    height: 10,
-    distanceCoast: 20,
-    cp: 0.8
-  });
-
-  const [driftState, setDriftState] = useState<DriftState>({
-    preset: 'custom',
-    heightH: 2.0,
-    lengthB1: 10,
-    gamma: 2.0
-  });
+  const [projectTitle, setProjectTitle] = useState<string>('');
+  
+  const [snowState, setSnowState] = useState<SnowState>(INITIAL_SNOW_STATE);
+  const [windState, setWindState] = useState<WindState>(INITIAL_WIND_STATE);
+  const [driftState, setDriftState] = useState<DriftState>(INITIAL_DRIFT_STATE);
 
   // --- Dynamic Title Effect (SEO/UX) ---
   useEffect(() => {
@@ -39,8 +45,8 @@ const App: React.FC = () => {
       [CalculationType.WIND]: 'Pressione Vento | NTC 2018',
       [CalculationType.DRIFT]: 'Accumulo Neve | NTC 2018'
     };
-    document.title = titles[activeTab];
-  }, [activeTab]);
+    document.title = projectTitle ? `${projectTitle} - ${titles[activeTab]}` : titles[activeTab];
+  }, [activeTab, projectTitle]);
 
   // --- Calculations ---
   const result: CalculationResult = useMemo(() => {
@@ -59,6 +65,89 @@ const App: React.FC = () => {
   // --- Handlers ---
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleReset = () => {
+    if (window.confirm("Sei sicuro di voler resettare tutti i campi? I dati inseriti andranno persi.")) {
+      setSnowState(INITIAL_SNOW_STATE);
+      setWindState(INITIAL_WIND_STATE);
+      setDriftState(INITIAL_DRIFT_STATE);
+      setProjectTitle('');
+      setActiveTab(CalculationType.SNOW);
+    }
+  };
+
+  const handleExcelExport = () => {
+    // Generate an HTML table for Excel (preserves formatting better than CSV without heavy libraries)
+    const title = projectTitle || "Report_NTC_2018";
+    const typeLabel = activeTab === CalculationType.SNOW ? 'Carico Neve' : activeTab === CalculationType.WIND ? 'Pressione Vento' : 'Accumulo Neve';
+    
+    let tableRows = result.details.map(row => `
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 5px; background-color: #f9f9f9;">${row.label}</td>
+        <td style="border: 1px solid #ccc; padding: 5px; font-weight: bold; text-align: right;">${row.value} ${row.unit || ''}</td>
+      </tr>
+    `).join('');
+
+    // Add main result row
+    tableRows += `
+      <tr>
+        <td style="border: 2px solid #000; padding: 10px; background-color: #e0e7ff; font-weight: bold;">RISULTATO PRINCIPALE</td>
+        <td style="border: 2px solid #000; padding: 10px; background-color: #e0e7ff; font-weight: bold; text-align: right; color: #312e81; font-size: 14pt;">${result.mainValue} kN/m²</td>
+      </tr>
+    `;
+
+    const excelContent = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta charset="UTF-8">
+        <!--[if gte mso 9]>
+        <xml>
+          <x:ExcelWorkbook>
+            <x:ExcelWorksheets>
+              <x:ExcelWorksheet>
+                <x:Name>${typeLabel}</x:Name>
+                <x:WorksheetOptions>
+                  <x:DisplayGridlines/>
+                </x:WorksheetOptions>
+              </x:ExcelWorksheet>
+            </x:ExcelWorksheets>
+          </x:ExcelWorkbook>
+        </xml>
+        <![endif]-->
+        <style>
+          body { font-family: Arial, sans-serif; }
+          table { border-collapse: collapse; width: 100%; }
+        </style>
+      </head>
+      <body>
+        <h3>${title} - ${typeLabel}</h3>
+        <p>Generato da NTC 2018 Calculator - Efrem Giannessi</p>
+        <table>
+          <thead>
+            <tr style="background-color: #1f2937; color: white;">
+              <th style="border: 1px solid #000; padding: 8px;">Parametro</th>
+              <th style="border: 1px solid #000; padding: 8px;">Valore</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
+        </table>
+        <br/>
+        <p style="font-size: 10px; color: #666;">Disclaimer: Valori indicativi per pre-dimensionamento.</p>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${title.replace(/\s+/g, '_')}_${typeLabel}.xls`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleDriftPreset = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -309,7 +398,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       
-      {/* Developer Credits Banner */}
+      {/* Developer Credits Banner - Screen Only */}
       <div className="w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-white/10 py-3 px-4 text-center no-print relative z-50 shadow-md">
         <p className="text-sm md:text-base text-gray-300 font-medium tracking-wide">
           Software progettato e sviluppato da{' '}
@@ -324,10 +413,9 @@ const App: React.FC = () => {
         </p>
       </div>
 
-      {/* Header */}
+      {/* Header - Screen */}
       <header className="bg-gray-900/60 backdrop-blur-xl border-b border-white/10 z-20 sticky top-0 no-print transition-all duration-300">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Logo Section */}
           <div className="flex items-center gap-4">
             <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-2.5 rounded-xl shadow-lg shadow-blue-900/50 border border-white/10">
               <Calculator size={24} />
@@ -338,7 +426,6 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* System Status Indicator */}
           <div className="hidden md:flex flex-col items-end">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-0.5">Stato Sistema</span>
             <div className="flex items-center gap-2">
@@ -352,19 +439,44 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* Printable Header (Visible only when printing) */}
-      <div className="hidden print-only p-8 border-b-2 border-black mb-8">
-         <h1 className="text-3xl font-bold text-black mb-2">Report di Calcolo - NTC 2018</h1>
-         <p className="text-sm text-gray-600">Generato il {new Date().toLocaleDateString('it-IT')}</p>
-         <p className="text-sm text-gray-600 mt-2">
-            Tipologia: {activeTab === CalculationType.SNOW ? 'Carico Neve' : activeTab === CalculationType.WIND ? 'Pressione Vento' : 'Accumulo Neve'}
-         </p>
+      {/* --- PRINT ONLY HEADER --- */}
+      <div className="hidden print-only mb-6 border-b-2 border-gray-800 pb-4">
+         <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-bold text-black mb-1">Report di Calcolo - NTC 2018</h1>
+              <p className="text-base text-gray-700 font-semibold mb-2">
+                 Software progettato e sviluppato da <a href="https://www.efremgiannessi.org/" className="text-blue-800 underline">Efrem Giannessi</a>
+              </p>
+              <p className="text-sm text-gray-600">
+                <a href="https://www.efremgiannessi.org/" className="underline">https://www.efremgiannessi.org/</a>
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-600">Data: {new Date().toLocaleDateString('it-IT')}</p>
+              <p className="text-sm text-gray-600">Tipologia: {activeTab === CalculationType.SNOW ? 'Carico Neve' : activeTab === CalculationType.WIND ? 'Pressione Vento' : 'Accumulo Neve'}</p>
+            </div>
+         </div>
       </div>
 
       <main className="flex-grow max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-0">
         
         {/* Sidebar Controls */}
         <aside className="lg:col-span-3 space-y-6 no-print">
+          
+          {/* Project Title Input */}
+          <div className="bg-gray-800/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 shadow-xl">
+             <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+               Nome Progetto / Riferimento
+             </label>
+             <input 
+               type="text" 
+               placeholder="Es. Capannone Rossi"
+               value={projectTitle}
+               onChange={(e) => setProjectTitle(e.target.value)}
+               className={inputClass}
+             />
+          </div>
+
           {/* Tabs */}
           <div className="bg-gray-800/40 backdrop-blur-md border border-white/10 rounded-2xl p-1.5 flex shadow-2xl">
             <button 
@@ -387,19 +499,38 @@ const App: React.FC = () => {
             </button>
           </div>
 
-          {/* Input Panel - Glassmorphism */}
+          {/* Input Panel */}
           <div className="backdrop-blur-md bg-gray-800/40 border border-white/10 rounded-2xl shadow-2xl p-6">
             {renderInputSection()}
+          </div>
 
-            <div className="flex gap-2 pt-8">
-              <button 
+          {/* Action Buttons */}
+          <div className="grid grid-cols-2 gap-3">
+             <button 
+               onClick={handleReset}
+               className="col-span-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 py-3 px-2 rounded-xl transition-all flex flex-col items-center justify-center gap-1 text-xs font-medium"
+               title="Resetta tutti i campi"
+             >
+               <RotateCcw size={18} /> 
+               Reset
+             </button>
+             
+             <button 
+               onClick={handleExcelExport}
+               className="col-span-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 py-3 px-2 rounded-xl transition-all flex flex-col items-center justify-center gap-1 text-xs font-medium"
+               title="Esporta in Excel"
+             >
+               <FileSpreadsheet size={18} /> 
+               Excel
+             </button>
+
+             <button 
                 onClick={handlePrint}
-                className="flex-1 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-blue-900/30 border border-white/10 flex items-center justify-center gap-2 group"
+                className="col-span-2 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-blue-900/30 border border-white/10 flex items-center justify-center gap-2 group"
               >
                 <Printer size={18} className="group-hover:scale-110 transition-transform" /> 
                 Stampa Report / PDF
               </button>
-            </div>
           </div>
 
            {/* Disclaimer */}
@@ -420,6 +551,19 @@ const App: React.FC = () => {
         {/* Results Section */}
         <section className="lg:col-span-9 space-y-8">
           
+          {/* Project Title Display (if set) */}
+          {projectTitle && (
+            <div className="backdrop-blur-md bg-gray-800/40 border border-blue-500/30 rounded-2xl p-4 shadow-lg flex items-center gap-3 animate-fade-in break-after-avoid">
+               <div className="bg-blue-500/20 p-2 rounded-lg text-blue-400">
+                  <FileText size={20} />
+               </div>
+               <div>
+                  <h2 className="text-lg font-bold text-white leading-tight">{projectTitle}</h2>
+                  <p className="text-xs text-gray-400">Riferimento Progetto</p>
+               </div>
+            </div>
+          )}
+
           {/* Main Results Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ResultCard 
@@ -523,6 +667,18 @@ const App: React.FC = () => {
           </a>
         </div>
       </footer>
+
+      {/* --- PRINT ONLY FOOTER --- */}
+      <div className="hidden print-only mt-auto pt-8 border-t border-gray-300 text-center">
+         <p className="text-xs font-bold text-gray-800 mb-1">COPYRIGHT © 2025 EFREM GIANNESSI. TUTTI I DIRITTI RISERVATI.</p>
+         <p className="text-[10px] text-gray-600 leading-tight mx-auto max-w-4xl">
+           Il presente report è stato generato automaticamente tramite il software NTC 2018 Calculator. È severamente vietata la riproduzione,
+           distribuzione, modifica o ingegneria inversa del software senza autorizzazione esplicita. L'utilizzo dei dati e dei calcoli
+           contenuti in questo documento è a totale discrezione e responsabilità dell'utente professionale. L'autore non si assume
+           responsabilità per eventuali errori o imprecisioni nei calcoli automatici.
+         </p>
+         <p className="text-[10px] text-gray-600 mt-1 font-mono">https://www.efremgiannessi.org/</p>
+      </div>
     </div>
   );
 };
