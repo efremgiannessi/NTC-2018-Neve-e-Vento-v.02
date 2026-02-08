@@ -76,8 +76,8 @@ const App: React.FC = () => {
       </tr>`).join('');
 
     tableRows += `<tr>
-      <td style="border: 2px solid #000; padding: 10px; background-color: #e0e7ff; font-weight: bold;">RISULTATO PRINCIPALE</td>
-      <td style="border: 2px solid #000; padding: 10px; background-color: #e0e7ff; font-weight: bold; text-align: right; color: #312e81; font-size: 14pt;">${result.mainValue} kN/m²</td>
+      <td style="border: 2px solid #000; padding: 10px; background-color: #fff7ed; font-weight: bold;">RISULTATO PRINCIPALE</td>
+      <td style="border: 2px solid #000; padding: 10px; background-color: #fff7ed; font-weight: bold; text-align: right; color: #9a3412; font-size: 14pt;">${result.mainValue} kN/m²</td>
     </tr>`;
 
     const excelContent = `
@@ -107,14 +107,14 @@ const App: React.FC = () => {
     setDriftState(newState);
   };
 
-  const inputClass = "w-full bg-gray-900/50 border border-white/10 text-white text-sm rounded-lg block p-2.5 focus:ring-2 focus:ring-blue-500/50 outline-none transition-all placeholder-gray-500 backdrop-blur-sm";
+  const inputClass = "w-full bg-gray-900/50 border border-white/10 text-white text-sm rounded-lg block p-2.5 focus:ring-2 focus:ring-orange-500/50 outline-none transition-all placeholder-gray-500 backdrop-blur-sm";
   const labelClass = "block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 ml-1";
 
   const renderInputs = () => {
     if (activeTab === CalculationType.SNOW) {
       return (
         <div className="space-y-4 animate-fade-in">
-          <div className="border-l-4 border-blue-500 pl-3">
+          <div className="border-l-4 border-orange-500 pl-3">
             <h2 className="text-lg font-bold text-white">Parametri Neve</h2>
           </div>
           <div>
@@ -128,11 +128,11 @@ const App: React.FC = () => {
           </div>
           <div>
             <label className={labelClass}>Altitudine ({snowState.altitude} m)</label>
-            <input type="range" min="0" max="1500" value={snowState.altitude} onChange={(e) => setSnowState({...snowState, altitude: parseInt(e.target.value)})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500" />
+            <input type="range" min="0" max="1500" value={snowState.altitude} onChange={(e) => setSnowState({...snowState, altitude: parseInt(e.target.value)})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500" />
           </div>
           <div>
             <label className={labelClass}>Inclinazione ({snowState.angle}°)</label>
-            <input type="range" min="0" max="80" value={snowState.angle} onChange={(e) => setSnowState({...snowState, angle: parseInt(e.target.value)})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500" />
+            <input type="range" min="0" max="80" value={snowState.angle} onChange={(e) => setSnowState({...snowState, angle: parseInt(e.target.value)})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500" />
           </div>
           <div className="grid grid-cols-2 gap-3">
              <div>
@@ -149,7 +149,7 @@ const App: React.FC = () => {
     } else if (activeTab === CalculationType.WIND) {
       return (
         <div className="space-y-4 animate-fade-in">
-          <div className="border-l-4 border-teal-500 pl-3">
+          <div className="border-l-4 border-amber-500 pl-3">
             <h2 className="text-lg font-bold text-white">Parametri Vento</h2>
           </div>
           <div>
@@ -169,7 +169,7 @@ const App: React.FC = () => {
           </div>
           <div>
             <label className={labelClass}>Altezza ({windState.height} m)</label>
-            <input type="range" min="1" max="100" value={windState.height} onChange={(e) => setWindState({...windState, height: parseInt(e.target.value)})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-teal-500" />
+            <input type="range" min="1" max="100" value={windState.height} onChange={(e) => setWindState({...windState, height: parseInt(e.target.value)})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-amber-500" />
           </div>
           <div className="grid grid-cols-2 gap-3">
              <div>
@@ -186,7 +186,7 @@ const App: React.FC = () => {
     } else {
       return (
         <div className="space-y-4 animate-fade-in">
-          <div className="border-l-4 border-purple-500 pl-3">
+          <div className="border-l-4 border-orange-600 pl-3">
             <h2 className="text-lg font-bold text-white">Accumulo Neve</h2>
           </div>
           <div>
@@ -201,7 +201,7 @@ const App: React.FC = () => {
           </div>
           <div>
             <label className={labelClass}>Dislivello h ({driftState.heightH} m)</label>
-            <input type="range" min="0.5" max="10" step="0.1" value={driftState.heightH} onChange={(e) => setDriftState({...driftState, heightH: parseFloat(e.target.value), preset: 'custom'})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500" />
+            <input type="range" min="0.5" max="10" step="0.1" value={driftState.heightH} onChange={(e) => setDriftState({...driftState, heightH: parseFloat(e.target.value), preset: 'custom'})} className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-600" />
           </div>
           <div>
              <label className={labelClass}>Lunghezza copertura (m)</label>
@@ -216,10 +216,10 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col font-sans overflow-x-hidden">
       
       {/* Credits Banner - Screen Only */}
-      <div className="w-full bg-gray-900 border-b border-white/5 py-2 px-4 text-center no-print">
+      <div className="w-full bg-black border-b border-white/5 py-2 px-4 text-center no-print">
         <p className="text-[10px] sm:text-xs md:text-sm text-gray-400 font-medium tracking-tight">
           Software progettato e sviluppato da{' '}
-          <a href="https://www.efremgiannessi.org" target="_blank" rel="noopener noreferrer" className="text-blue-400 font-bold hover:underline">
+          <a href="https://www.efremgiannessi.org" target="_blank" rel="noopener noreferrer" className="text-orange-500 font-bold hover:text-orange-400 transition-colors">
             Efrem Giannessi
           </a>
         </p>
@@ -229,7 +229,7 @@ const App: React.FC = () => {
       <header className="bg-gray-900/40 backdrop-blur-xl border-b border-white/5 no-print sticky top-0 z-50">
         <div className="max-w-[1600px] mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-600 text-white p-2 rounded-lg shadow-lg"><Calculator size={20} /></div>
+            <div className="bg-orange-600 text-white p-2 rounded-lg shadow-lg shadow-orange-900/20"><Calculator size={20} /></div>
             <div>
               <h1 className="text-sm sm:text-lg font-bold text-white leading-tight">NTC 2018 Calculator</h1>
               <span className="text-[8px] sm:text-[10px] text-gray-500 uppercase font-bold tracking-widest">Neve • Vento • Accumulo</span>
@@ -237,8 +237,8 @@ const App: React.FC = () => {
           </div>
           <div className="hidden sm:flex flex-col items-end">
              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-[10px] font-bold text-gray-400">ONLINE</span>
+                <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Online</span>
              </div>
           </div>
         </div>
@@ -269,14 +269,14 @@ const App: React.FC = () => {
           </div>
 
           {/* Navigation Tabs - Mobile Optimized */}
-          <div className="bg-gray-900/80 border border-white/10 rounded-xl p-1 flex shadow-xl overflow-hidden">
-            <button onClick={() => setActiveTab(CalculationType.SNOW)} className={`flex-1 py-3 text-[10px] sm:text-xs font-bold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1 ${activeTab === CalculationType.SNOW ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-400'}`}>
+          <div className="bg-black/40 border border-white/10 rounded-xl p-1 flex shadow-xl overflow-hidden">
+            <button onClick={() => setActiveTab(CalculationType.SNOW)} className={`flex-1 py-3 text-[10px] sm:text-xs font-bold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1 ${activeTab === CalculationType.SNOW ? 'bg-orange-600 text-white shadow-lg' : 'text-gray-400'}`}>
               <Snowflake size={14} /> NEVE
             </button>
-            <button onClick={() => setActiveTab(CalculationType.WIND)} className={`flex-1 py-3 text-[10px] sm:text-xs font-bold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1 ${activeTab === CalculationType.WIND ? 'bg-teal-600 text-white shadow-lg' : 'text-gray-400'}`}>
+            <button onClick={() => setActiveTab(CalculationType.WIND)} className={`flex-1 py-3 text-[10px] sm:text-xs font-bold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1 ${activeTab === CalculationType.WIND ? 'bg-amber-600 text-white shadow-lg' : 'text-gray-400'}`}>
               <Wind size={14} /> VENTO
             </button>
-            <button onClick={() => setActiveTab(CalculationType.DRIFT)} className={`flex-1 py-3 text-[10px] sm:text-xs font-bold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1 ${activeTab === CalculationType.DRIFT ? 'bg-purple-600 text-white shadow-lg' : 'text-gray-400'}`}>
+            <button onClick={() => setActiveTab(CalculationType.DRIFT)} className={`flex-1 py-3 text-[10px] sm:text-xs font-bold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1 ${activeTab === CalculationType.DRIFT ? 'bg-orange-800 text-white shadow-lg' : 'text-gray-400'}`}>
               <Layers size={14} /> ACCUMULO
             </button>
           </div>
@@ -288,22 +288,30 @@ const App: React.FC = () => {
           <div className="grid grid-cols-3 gap-2">
              <button onClick={handleReset} className="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 py-3 rounded-lg flex flex-col items-center justify-center text-[10px] font-bold"><RotateCcw size={16} className="mb-1" /> RESET</button>
              <button onClick={handleExcelExport} className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 py-3 rounded-lg flex flex-col items-center justify-center text-[10px] font-bold"><FileSpreadsheet size={16} className="mb-1" /> EXCEL</button>
-             <button onClick={handlePrint} className="bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-lg flex flex-col items-center justify-center text-[10px] font-bold shadow-lg shadow-indigo-900/40"><Printer size={16} className="mb-1" /> STAMPA</button>
+             <button onClick={handlePrint} className="bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white py-3 rounded-lg flex flex-col items-center justify-center text-[10px] font-bold shadow-lg shadow-orange-900/40"><Printer size={16} className="mb-1" /> STAMPA</button>
+          </div>
+
+          <div className="backdrop-blur-sm bg-orange-900/10 border-l-4 border-orange-500 p-4 rounded-r-xl border-y border-r border-white/5">
+            <div className="flex">
+              <AlertTriangle className="text-orange-500 w-5 h-5 shrink-0" />
+              <p className="ml-3 text-[10px] text-gray-400 leading-relaxed uppercase font-bold tracking-tight">
+                Strumento indicativo per pre-dimensionamento. Validare con un professionista.
+              </p>
+            </div>
           </div>
         </aside>
 
         {/* Results Area */}
         <section className="lg:col-span-8 xl:col-span-9 space-y-6 sm:space-y-8">
           
-          {/* Mobile Title View */}
           {projectTitle && (
-            <div className="bg-blue-900/20 border border-blue-500/30 rounded-xl p-3 flex items-center gap-3 no-print">
-               <FileText size={18} className="text-blue-400" />
+            <div className="bg-orange-500/5 border border-orange-500/20 rounded-xl p-3 flex items-center gap-3 no-print">
+               <FileText size={18} className="text-orange-500" />
                <h2 className="text-sm font-bold text-white truncate">{projectTitle}</h2>
             </div>
           )}
 
-          {/* Results Grid - Responsive Columns */}
+          {/* Results Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             <ResultCard 
               label={activeTab === CalculationType.WIND ? "Pressione Vento" : activeTab === CalculationType.DRIFT ? "Carico Accumulo" : "Carico Neve Totale"}
@@ -313,26 +321,26 @@ const App: React.FC = () => {
             <ResultCard label={result.secResult2.label} value={result.secResult2.value} unit={result.secResult2.unit} />
           </div>
 
-          {/* Charts Area - Mobile Optimized */}
+          {/* Charts Area */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 print:block print:space-y-4">
             <ChartContainer 
               title={activeTab === CalculationType.DRIFT ? "Profilo Carico" : "Variazione Carico"}
               data={result.chartData1} dataKeyX="x" dataKeyY="y"
-              color={activeTab === CalculationType.WIND ? "#2DD4BF" : activeTab === CalculationType.DRIFT ? "#A855F7" : "#60A5FA"}
+              color={activeTab === CalculationType.WIND ? "#fbbf24" : activeTab === CalculationType.DRIFT ? "#f97316" : "#ea580c"}
               type={activeTab === CalculationType.DRIFT ? 'area' : 'line'}
             />
             <ChartContainer 
               title={activeTab === CalculationType.WIND ? "Coeff. Esposizione" : "Coeff. Forma / Peso"}
               data={result.chartData2} dataKeyX="x" dataKeyY="y"
-              color={activeTab === CalculationType.WIND ? "#818CF8" : activeTab === CalculationType.DRIFT ? "#EC4899" : "#34D399"}
+              color={activeTab === CalculationType.WIND ? "#f59e0b" : activeTab === CalculationType.DRIFT ? "#7c2d12" : "#fb923c"}
             />
           </div>
 
           {/* Detailed Data Table */}
           <div className="bg-gray-800/40 border border-white/10 rounded-xl overflow-hidden shadow-2xl break-inside-avoid">
-            <div className="px-4 py-3 border-b border-white/10 bg-white/5 flex justify-between items-center">
+            <div className="px-4 py-3 border-b border-white/10 bg-black/20 flex justify-between items-center">
               <h3 className="text-[10px] sm:text-xs font-bold text-gray-200 uppercase tracking-widest">Dettagli di Calcolo</h3>
-              <span className="text-[8px] font-bold bg-white/10 px-2 py-1 rounded text-gray-400">NTC 2018</span>
+              <span className="text-[8px] font-bold bg-orange-600 px-2 py-1 rounded text-white tracking-widest">NTC 2018</span>
             </div>
             <div className="p-4 overflow-x-auto">
               <table className="w-full text-xs sm:text-sm text-left">
@@ -340,7 +348,7 @@ const App: React.FC = () => {
                   {result.details.map((row, idx) => (
                     <tr key={idx} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                       <td className="py-2.5 text-gray-400 font-medium pl-1">{row.label}</td>
-                      <td className={`py-2.5 text-right pr-1 ${row.highlight ? 'text-lg font-bold text-white' : 'text-gray-200 font-semibold'}`}>
+                      <td className={`py-2.5 text-right pr-1 ${row.highlight ? 'text-lg font-bold text-orange-500' : 'text-gray-200 font-semibold'}`}>
                         {row.value} <span className="text-[10px] text-gray-500 font-normal">{row.unit}</span>
                       </td>
                     </tr>
@@ -353,20 +361,20 @@ const App: React.FC = () => {
       </main>
 
       {/* Screen Footer */}
-      <footer className="bg-gray-900/60 border-t border-white/5 py-6 mt-auto no-print">
+      <footer className="bg-black/60 border-t border-white/5 py-6 mt-auto no-print">
         <div className="max-w-[1600px] mx-auto px-4 text-center">
-          <p className="text-[10px] text-gray-500">&copy; 2025 • Efrem Giannessi • Strumento per Ingegneria Civile</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">&copy; 2025 • Efrem Giannessi • Professional Engineering Tools</p>
         </div>
       </footer>
 
       {/* --- PRINT FOOTER --- */}
       <div className="hidden print-only mt-8 pt-6 border-t border-gray-400 text-center">
-         <p className="text-[10px] font-bold mb-2">COPYRIGHT © 2025 EFREM GIANNESSI. TUTTI I DIRITTI RISERVATI.</p>
+         <p className="text-[10px] font-bold mb-2 uppercase">COPYRIGHT © 2025 EFREM GIANNESSI. TUTTI I DIRITTI RISERVATI.</p>
          <p className="text-[8px] text-gray-600 leading-tight max-w-2xl mx-auto">
            Il presente report è stato generato tramite NTC 2018 Calculator. È vietata la riproduzione o ingegneria inversa senza autorizzazione.
            L'utilizzo dei dati è a responsabilità esclusiva dell'utente professionale. L'autore non si assume responsabilità per errori.
          </p>
-         <p className="text-[8px] text-blue-800 mt-2 font-mono">https://www.efremgiannessi.org/</p>
+         <p className="text-[8px] text-orange-700 mt-2 font-mono">https://www.efremgiannessi.org/</p>
       </div>
     </div>
   );
