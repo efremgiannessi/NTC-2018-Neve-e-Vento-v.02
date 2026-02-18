@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Snowflake, Wind, Layers, Calculator, Printer, AlertTriangle, FileText, Info, RotateCcw, FileSpreadsheet } from 'lucide-react';
+import { Snowflake, Wind, Layers, Calculator, Printer, AlertTriangle, FileText, Info, RotateCcw, FileSpreadsheet, Shield, Globe } from 'lucide-react';
 import { CalculationType, SnowZone, WindZone, RoughnessClass, SnowState, WindState, DriftState, CalculationResult } from './types';
 import { calculateSnow, calculateWind, calculateDrift } from './utils/calculations';
 import ResultCard from './components/ResultCard';
@@ -361,9 +361,47 @@ const App: React.FC = () => {
       </main>
 
       {/* Screen Footer */}
-      <footer className="bg-black/60 border-t border-white/5 py-4 mt-auto no-print">
-        <div className="max-w-[1600px] mx-auto px-4 text-center">
-          <p className="text-[9px] text-gray-500 uppercase tracking-widest font-bold">&copy; 2025 • Efrem Giannessi • Professional Engineering Tools</p>
+      <footer className="w-full py-12 px-4 mt-auto no-print relative z-10 bg-gradient-to-b from-transparent to-black/40">
+        <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+          
+          {/* IP Security Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/20 bg-orange-900/10 mb-6 shadow-[0_0_15px_rgba(249,115,22,0.1)]">
+            <Shield size={10} className="text-orange-500" />
+            <span className="text-[9px] font-bold text-orange-500 tracking-widest uppercase">IP Security Protocol</span>
+          </div>
+
+          {/* Main Title */}
+          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tighter mb-2">
+            DEVELOPED BY <span className="text-orange-500">EFREM GIANNESSI</span>
+          </h2>
+
+          {/* Subtitle */}
+          <p className="text-[9px] sm:text-[10px] font-bold text-gray-500 tracking-[0.3em] uppercase mb-8">
+            Concrete Optimization Engineering Solutions
+          </p>
+
+          {/* Links Row */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-10">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-orange-600 shadow-[0_0_8px_rgba(234,88,12,0.8)]"></div>
+              <span className="text-[9px] font-bold text-gray-500 tracking-widest">2024-2025 ALL RIGHTS RESERVED</span>
+            </div>
+            <a href="https://www.efremgiannessi.org" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group cursor-pointer transition-colors">
+              <Globe size={12} className="text-gray-600 group-hover:text-orange-500 transition-colors" />
+              <span className="text-[9px] font-bold text-gray-500 group-hover:text-orange-500 tracking-widest transition-colors">EFREMGIANNESSI.ORG</span>
+            </a>
+          </div>
+
+          {/* Legal Box */}
+          <div className="w-full bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden group">
+             {/* Subtle glow effect behind legal box */}
+             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent opacity-50"></div>
+             
+             <p className="text-[8px] sm:text-[9px] text-gray-600 font-medium leading-loose tracking-wider uppercase max-w-3xl mx-auto">
+               Legal: Core algorithms are the exclusive property of Efrem Giannessi. Unauthorized reproduction or reverse engineering is strictly prohibited and protected by international IP laws.
+             </p>
+          </div>
+
         </div>
       </footer>
 
