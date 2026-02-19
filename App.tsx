@@ -35,6 +35,12 @@ const App: React.FC = () => {
   const [snowState, setSnowState] = useState<SnowState>(INITIAL_SNOW_STATE);
   const [windState, setWindState] = useState<WindState>(INITIAL_WIND_STATE);
   const [driftState, setDriftState] = useState<DriftState>(INITIAL_DRIFT_STATE);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const titles = {
@@ -215,6 +221,26 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col font-sans overflow-x-hidden">
       
+      {/* Splash Screen Overlay */}
+      <div className={`fixed inset-0 z-[100] bg-[#111827] flex flex-col items-center justify-center transition-all duration-1000 ease-out ${showSplash ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
+        <div className="relative mb-10">
+            <div className="absolute inset-0 bg-orange-600/30 blur-3xl rounded-full animate-pulse"></div>
+            <div className="relative bg-gray-900/80 backdrop-blur-xl p-8 rounded-3xl border border-orange-500/30 shadow-[0_0_50px_rgba(234,88,12,0.3)] ring-1 ring-white/10 transform scale-110">
+                <Calculator size={80} className="text-orange-500 drop-shadow-[0_0_15px_rgba(234,88,12,0.5)]" />
+            </div>
+        </div>
+        <div className="text-center space-y-4">
+            <h1 className="text-5xl sm:text-7xl font-black text-white tracking-tighter">
+                NTC <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-500">2018</span>
+            </h1>
+            <div className="flex items-center justify-center gap-4 text-gray-400 font-bold text-xs sm:text-sm tracking-[0.4em] uppercase">
+                <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-gray-600"></span>
+                Engineering Calculator
+                <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-gray-600"></span>
+            </div>
+        </div>
+      </div>
+
       {/* Credits Banner - Screen Only */}
       <div className="w-full bg-black border-b border-white/5 py-1 px-4 text-center no-print">
         <p className="text-[9px] sm:text-[11px] text-gray-400 font-medium tracking-tight">
